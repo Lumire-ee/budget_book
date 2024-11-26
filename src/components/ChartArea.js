@@ -13,13 +13,13 @@ export default function ChartArea({ activeTab, setActiveTab }) {
                   : "text-gray-500 hover:bg-gray-100"
               }`}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab}
             </button>
           ))}
         </div>
       </div>
       <div className="p-6 h-[300px] flex items-center justify-center text-gray-500">
-        차트 보기 - {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}{" "}
+        차트 보기 - {activeTab}
       </div>
     </div>
   );
