@@ -12,7 +12,21 @@ export default function Modal({ onAddTransaction, onClose }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (name === "amount") {
+      const rawValue = value.replace(/,/g, "");
+      if (/^\d*$/.test(rawValue)) {
+        setFormData({
+          ...formData,
+          [name]: rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleTypeChange = (type) => {
@@ -22,8 +36,10 @@ export default function Modal({ onAddTransaction, onClose }) {
   const handleSubmit = () => {
     const amount =
       transactionType === "income"
-        ? Math.abs(parseInt(formData.amount, 10))
-        : -Math.abs(parseInt(formData.amount, 10));
+        ? Math.abs(parseInt(formData.amount.replace(/,/g, ""), 10))
+        : -Math.abs(parseInt(formData.amount.replace(/,/g, ""), 10));
+
+    console.log("transaction added!", { ...formData, amount });
 
     onAddTransaction({ ...formData, amount });
     onClose();
@@ -76,15 +92,12 @@ export default function Modal({ onAddTransaction, onClose }) {
             onChange={handleInputChange}
           />
           <input
-            type="number"
+            type="text"
             name="amount"
             placeholder="금액 (₩)"
             className="w-full p-2 border rounded bg-gray-50 dark:bg-gray-300 outline-none"
             value={formData.amount}
             onChange={handleInputChange}
-            onInput={(e) => {
-              e.target.value = e.target.value.replace(/[^0-9]/g, "");
-            }}
           />
           <input
             type="text"
