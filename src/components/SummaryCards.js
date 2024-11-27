@@ -11,7 +11,7 @@ export default function SummaryCard({ income, expenses, balance }) {
           <div className="ml-4">
             <p className="text-sm text-gray-400">총 수익</p>
             <p className="text-2xl font-semibold dark:text-gray-400">
-              ₩2,450,000
+              ₩{Math.abs(income).toLocaleString()}
             </p>
           </div>
         </div>
@@ -25,7 +25,7 @@ export default function SummaryCard({ income, expenses, balance }) {
           <div className="ml-4">
             <p className="text-sm text-gray-400">총 지출</p>
             <p className="text-2xl font-semibold dark:text-gray-400">
-              ₩1,280,000
+              ₩{Math.abs(expenses).toLocaleString()}
             </p>
           </div>
         </div>
@@ -39,7 +39,7 @@ export default function SummaryCard({ income, expenses, balance }) {
           <div className="ml-4">
             <p className="text-sm text-gray-400">잔고</p>
             <p className="text-2xl font-semibold dark:text-gray-400">
-              ₩1,170,000
+              ₩{Math.abs(balance).toLocaleString()}
             </p>
           </div>
         </div>

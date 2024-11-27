@@ -17,35 +17,18 @@ function App() {
   const [expenses, setExpenses] = useState(0);
   const [balance, setBalance] = useState(income - expenses);
   const [chartData, setChartData] = useState([]);
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      title: "Grocery Shopping",
-      amount: -58000,
-      category: "Food",
-      date: "2024-01-15",
-    },
-    {
-      id: 2,
-      title: "Salary Deposit",
-      amount: 2450000,
-      category: "Income",
-      date: "2024-01-14",
-    },
-    {
-      id: 3,
-      title: "Coffee Shop",
-      amount: -5500,
-      category: "Entertainment",
-      date: "2024-01-14",
-    },
-  ]);
+  const [transactions, setTransactions] = useState([]);
 
   const handleAddTransaction = (newTransaction) => {
     const amount = parseInt(newTransaction.amount, 10);
-    setTransactions([newTransaction, ...transactions]);
+
+    setTransactions((prevTransactions) => [
+      newTransaction,
+      ...prevTransactions,
+    ]);
     if (amount > 0) setIncome(income + amount);
     else setExpenses(expenses + Math.abs(amount));
+
     setBalance(balance + amount);
   };
 
@@ -57,7 +40,7 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white dark:bg-[#212121] text-gray-800 transition-colors duration-500">
         <SummaryCards income={income} expenses={expenses} balance={balance} />
         <ChartArea activeTab={activeTab} setActiveTab={setActiveTab} />
-        <TransactionsList />
+        <TransactionsList transactions={transactions} />
       </main>
       {isModalOpen && (
         <Modal onAddTransaction={handleAddTransaction} onClose={toggleModal} />
