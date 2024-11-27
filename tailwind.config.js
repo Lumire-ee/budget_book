@@ -2,8 +2,18 @@
 module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  safelist: [
+    "bg-[#212121]",
+    "text-gray-200",
+    "dark:bg-[#212121]",
+    "dark:text-gray-200",
+  ],
   theme: {
     extend: {
+      boxShadow: {
+        "custom-dark": "0 4px 6px rgba(255, 255, 255, 0.1)",
+        "custom-sm-dark": "0 1px 2px 0 rgba(255, 255, 255, 0.1)",
+      },
       transitionProperty: {
         colors: "background-color, border-color, color, fill, stroke",
       },

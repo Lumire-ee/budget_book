@@ -2,9 +2,11 @@ import { HandCoins, TrendingDown, ChevronRight } from "lucide-react";
 
 export default function TransactionsList() {
   return (
-    <div className="bg-white rounded-lg shadow transactions">
-      <div className="px-6 py-4 border-b">
-        <h2 className="text-lg font-semibold text-gray-800">거래 내역</h2>
+    <div className="bg-white rounded-lg shadow transactions dark:shadow-custom-dark dark:bg-darkbg ">
+      <div className="px-6 py-4 border-b dark:border-gray-600">
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-400">
+          거래 내역
+        </h2>
       </div>
       {[
         {
@@ -31,7 +33,7 @@ export default function TransactionsList() {
       ].map((transaction) => (
         <div
           key={transaction.id}
-          className="px-6 py-4 border-b last:border-b-0 flex items-center justify-between hover:bg-gray-50"
+          className="px-6 py-4 border-b last:border-b-0 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-600"
         >
           <div className="flex items-center">
             <div className="mr-4">
@@ -50,8 +52,10 @@ export default function TransactionsList() {
               </div>
             </div>
             <div>
-              <p className="font-medium text-gray-800">{transaction.title}</p>
-              <p className="text-sm text-gray-500">{transaction.category}</p>
+              <p className="font-medium text-gray-800 dark:text-gray-400">
+                {transaction.title}
+              </p>
+              <p className="text-sm text-gray-400 ">{transaction.category}</p>
             </div>
           </div>
           <div className="flex items-center">
@@ -64,7 +68,9 @@ export default function TransactionsList() {
                 {transaction.amount > 0 ? "+" : ""}₩
                 {Math.abs(transaction.amount).toLocaleString()}
               </p>
-              <p className="text-sm text-gray-500">{transaction.date}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {transaction.date}
+              </p>
             </div>
             <ChevronRight className="h-5 w-5 text-gray-400" />
           </div>

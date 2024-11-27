@@ -12,9 +12,9 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [activeTab, setActiveTab] = useState("월간");
   return (
-    <>
+    <div className='"bg-gray-100 dark:bg-[#212121] transition-colors duration-500 px-4 sm:px-6"'>
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 dark:bg-darkbg">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white dark:bg-[#212121] text-gray-800 transition-colors duration-500">
         <SummaryCards />
         <ChartArea activeTab={activeTab} setActiveTab={setActiveTab} />
         <TransactionsList />
@@ -25,7 +25,7 @@ function App() {
       >
         <PlusCircle className="h-6 w-6 text-white" />
       </button>
-    </>
+    </div>
   );
 }
 
