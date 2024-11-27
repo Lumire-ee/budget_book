@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/budget_book/static/css/main.b1c009e1.css",
+    "main.js": "/budget_book/static/js/main.0cfd1277.js",
+    "index.html": "/budget_book/index.html",
+    "main.b1c009e1.css.map": "/budget_book/static/css/main.b1c009e1.css.map",
+    "main.0cfd1277.js.map": "/budget_book/static/js/main.0cfd1277.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1c009e1.css",
+    "static/js/main.0cfd1277.js"
+  ]
+}
