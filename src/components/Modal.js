@@ -45,7 +45,7 @@ export default function Modal({ onAddTransaction, onClose }) {
           <button
             className={`flex items-center justify-center gap-x-2 w-full py-2 mr-2 rounded-lg ${
               transactionType === "income"
-                ? "bg-green-300"
+                ? "bg-red-300"
                 : "bg-gray-50 dark:bg-gray-300"
             }`}
             onClick={() => handleTypeChange("income")}
@@ -56,7 +56,7 @@ export default function Modal({ onAddTransaction, onClose }) {
           <button
             className={`flex items-center justify-center gap-x-2 w-full py-2 rounded-lg ${
               transactionType === "expense"
-                ? "bg-red-300"
+                ? "bg-green-300"
                 : "bg-gray-50 dark:bg-gray-300"
             }`}
             onClick={() => handleTypeChange("expense")}
