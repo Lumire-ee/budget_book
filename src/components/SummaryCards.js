@@ -1,6 +1,6 @@
 import { HandCoins, TrendingDown, Wallet } from "lucide-react";
 
-export default function SummaryCard() {
+export default function SummaryCard({ income, expenses, balance }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 summarycards">
       <div className="bg-white rounded-lg shadow p-6 border-l-4 border-[#FFB5B5] dark:shadow-custom-dark dark:bg-darkbg">
