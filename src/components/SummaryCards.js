@@ -9,7 +9,7 @@ export default function SummaryCard({ income, expenses, balance }) {
             <HandCoins className="h-6 w-6 text-[#FFB5B5]" />
           </div>
           <div className="ml-4">
-            <p className="text-sm text-gray-400">총 수익</p>
+            <p className="text-sm text-gray-400">총 수입</p>
             <p className="text-2xl font-semibold dark:text-gray-400">
               ₩{Math.abs(income).toLocaleString()}
             </p>
