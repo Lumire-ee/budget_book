@@ -28,9 +28,9 @@ export default function TransactionsList({ transactions = [] }) {
                   }`}
                 >
                   {transaction.amount > 0 ? (
-                    <HandCoins className="h-5 w-5 text-[#FFB5B5]" />
+                    <HandCoins className="h-5 w-5 text-[#FFB5B5] dark:text-[#E37373]" />
                   ) : (
-                    <TrendingDown className="h-5 w-5 text-[#B5E5CF]" />
+                    <TrendingDown className="h-5 w-5 text-[#B5E5CF] dark:text-[#1C7745]" />
                   )}
                 </div>
               </div>
@@ -45,7 +45,9 @@ export default function TransactionsList({ transactions = [] }) {
               <div className="text-right mr-4">
                 <p
                   className={`font-medium ${
-                    transaction.amount > 0 ? "text-[#FFB5B5]" : "text-[#B5E5CF]"
+                    transaction.amount > 0
+                      ? "text-[#FFB5B5] dark:text-[#E37373]"
+                      : "text-[#B5E5CF] dark:text-[#1C7745]"
                   }`}
                 >
                   ₩{Math.abs(transaction.amount).toLocaleString()}
