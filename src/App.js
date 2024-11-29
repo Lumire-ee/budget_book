@@ -13,23 +13,27 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("월간");
-  const [income, setIncome] = useState(0);
-  const [expenses, setExpenses] = useState(0);
-  const [balance, setBalance] = useState(income - expenses);
-  const [chartData, setChartData] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
-  const handleAddTransaction = (newTransaction) => {
-    const amount = parseInt(newTransaction.amount, 10);
+  const calculaterSummary = () => {
+    const income = transactions
+      .filter((t) => t.amount > 0)
+      .reduce((sum, t) => sum + t.amount, 0);
+    const expenses = transactions
+      .filter((t) => t.amount < 0)
+      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+    const balance = income - expenses;
 
+    return { income, expenses, balance };
+  };
+
+  const { income, expenses, balance } = calculaterSummary();
+
+  const handleAddTransaction = (newTransaction) => {
     setTransactions((prevTransactions) => [
       newTransaction,
       ...prevTransactions,
     ]);
-    if (amount > 0) setIncome(income + amount);
-    else setExpenses(expenses + Math.abs(amount));
-
-    setBalance(balance + amount);
   };
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -39,14 +43,18 @@ function App() {
       <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white dark:bg-[#212121] text-gray-800 transition-colors duration-500">
         <SummaryCards income={income} expenses={expenses} balance={balance} />
-        <ChartArea activeTab={activeTab} setActiveTab={setActiveTab} />
+        <ChartArea
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          transactions={transactions}
+        />
         <TransactionsList transactions={transactions} />
       </main>
       {isModalOpen && (
         <Modal onAddTransaction={handleAddTransaction} onClose={toggleModal} />
       )}
       <button
-        className="fixed bottom-6 right-6 p-4 bg-[#E4B5FF] rounded-full shadow-lg hover:bg-[#D5A3F5] transition-colors"
+        className="fixed bottom-6 right-6 p-4 bg-[#E4B5FF] dark:bg-[#C792EA] rounded-full shadow-lg hover:bg-[#C792EA] dark:hover:bg-[#b06bd8] transition-colors"
         aria-label="Add new transaction"
         onClick={toggleModal}
       >

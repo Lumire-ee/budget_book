@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { HandCoins, TrendingDown } from "lucide-react";
 
 export default function Modal({ onAddTransaction, onClose }) {
-  const [transactionType, setTransactionType] = useState("income");
-  const [formData, setFormData] = useState({
+  const initailFormData = {
     title: "",
     amount: "",
     category: "",
     date: new Date().toISOString().split("T")[0],
-  });
+  };
+
+  const [transactionType, setTransactionType] = useState("income");
+  const [formData, setFormData] = useState({ initailFormData });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,28 +43,25 @@ export default function Modal({ onAddTransaction, onClose }) {
 
     console.log("transaction added!", { ...formData, amount });
 
-    onAddTransaction({ ...formData, amount });
+    onAddTransaction({ ...formData, amount, type: transactionType });
     onClose();
-    setFormData({
-      title: "",
-      amount: "",
-      category: "",
-      date: new Date().toISOString().split("T")[0],
-    });
+    setFormData({ initailFormData });
     setTransactionType("income");
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center text-gray-500">
-      <div className="bg-white rounded-lg p-6 shadow-lg w-96 dark:bg-darkbg">
-        <h2 className="text-lg font-semibold mb-4 text-gray-400">내역 추가</h2>
+      <div className="bg-white rounded-lg p-6 shadow-lg w-96 dark:bg-[#212121]">
+        <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-300">
+          내역 추가
+        </h2>
 
         <div className="flex justify-between mb-4">
           <button
             className={`flex items-center justify-center gap-x-2 w-full py-2 mr-2 rounded-lg ${
               transactionType === "income"
-                ? "bg-red-300"
-                : "bg-gray-50 dark:bg-gray-300"
+                ? "bg-[#E57373] text-white"
+                : "bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300"
             }`}
             onClick={() => handleTypeChange("income")}
           >
@@ -72,8 +71,8 @@ export default function Modal({ onAddTransaction, onClose }) {
           <button
             className={`flex items-center justify-center gap-x-2 w-full py-2 rounded-lg ${
               transactionType === "expense"
-                ? "bg-green-300"
-                : "bg-gray-50 dark:bg-gray-300"
+                ? "bg-[#80CFA9] text-white"
+                : "bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300"
             }`}
             onClick={() => handleTypeChange("expense")}
           >
@@ -87,7 +86,7 @@ export default function Modal({ onAddTransaction, onClose }) {
             type="text"
             name="title"
             placeholder="내용"
-            className="w-full p-2 border rounded bg-gray-50 dark:bg-gray-300 outline-none"
+            className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.title}
             onChange={handleInputChange}
           />
@@ -95,7 +94,7 @@ export default function Modal({ onAddTransaction, onClose }) {
             type="text"
             name="amount"
             placeholder="금액 (₩)"
-            className="w-full p-2 border rounded bg-gray-50 dark:bg-gray-300 outline-none"
+            className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.amount}
             onChange={handleInputChange}
           />
@@ -103,30 +102,31 @@ export default function Modal({ onAddTransaction, onClose }) {
             type="text"
             name="category"
             placeholder="분류"
-            className="w-full p-2 border rounded bg-gray-50 dark:bg-gray-300 outline-none"
+            className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.category}
             onChange={handleInputChange}
           />
           <input
             type="date"
             name="date"
-            className="w-full p-2 border rounded bg-gray-50 dark:bg-gray-300 outline-none"
+            className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.date}
             onChange={handleInputChange}
           />
         </div>
+
         <div className="mt-6 flex justify-end">
           <button
-            className="px-4 py-2 mr-3 bg-[#E4B5FF] rounded shadow dark:bg-gray-300 dark:shadow-custom-dark"
+            className="px-4 py-2 mr-3 bg-[#424242] text-gray-300 rounded shadow dark:shadow-custom-dark hover:bg-[#555555] hover:text-white transition-all duration-200"
             onClick={onClose}
           >
-            Cancel
+            취소
           </button>
           <button
-            className="px-4 py-2 bg-[#E4B5FF] rounded shadow dark:bg-gray-300 dark:shadow-custom-dark"
+            className="px-4 py-2 bg-[#80CFA9] text-white rounded shadow dark:shadow-custom-dark hover:bg-[#66B292] transition-all duration-200"
             onClick={handleSubmit}
           >
-            Add
+            추가
           </button>
         </div>
       </div>
