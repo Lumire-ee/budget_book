@@ -1,8 +1,6 @@
 import { HandCoins, TrendingDown, ChevronRight } from "lucide-react";
 
 export default function TransactionsList({ transactions = [] }) {
-  console.log("TransactionList에서 받음!", transactions);
-
   return (
     <div className="bg-white rounded-lg shadow transactions dark:shadow-custom-dark dark:bg-darkbg ">
       <div className="px-6 py-4 border-b dark:border-gray-600">
