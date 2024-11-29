@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusCircle } from "lucide-react";
 import "./App.css";
 
@@ -14,6 +14,19 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("월간");
   const [transactions, setTransactions] = useState([]);
+
+  const LOCAL_STORAGE_KEY = "transactions";
+
+  useEffect(() => {
+    const storedTransactions = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedTransactions) {
+      setTransactions(JSON.parse(storedTransactions));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactions));
+  }, [transactions]);
 
   const calculaterSummary = () => {
     const income = transactions
