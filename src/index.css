@@ -24,3 +24,7 @@ input:focus {
   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
   transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
+.bg-form {
+  background-color: #2e2e2e;
+  color: #e0e0e0;
+}
