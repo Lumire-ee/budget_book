@@ -15,6 +15,7 @@ export default function ChartArea({
   activeTab,
   setActiveTab,
   transactions,
+  setIsModalOpen,
 }) {
   const data = processData(transactions, activeTab);
 
@@ -45,7 +46,7 @@ export default function ChartArea({
               <YAxis />
               <Tooltip
                 cursor={{
-                  fill: isDarkMode ? "#3A3A3A" : "#EAEAEA", // 커서 강조 배경색
+                  fill: isDarkMode ? "#3A3A3A" : "#EAEAEA",
                   opacity: 0.5,
                 }}
                 formatter={(value, name) => {
@@ -74,7 +75,15 @@ export default function ChartArea({
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          "표시할 데이터가 없습니다."
+          <div className="flex flex-col items-center text-gray-500">
+            <p>표시할 데이터가 없습니다.</p>
+            <button
+              className="mt-4 px-4 py-2 bg-primary text-white rounded"
+              onClick={() => setIsModalOpen(true)}
+            >
+              거래 추가하기
+            </button>
+          </div>
         )}
       </div>
     </div>
