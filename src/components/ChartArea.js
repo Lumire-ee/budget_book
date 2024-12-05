@@ -10,10 +10,13 @@ import {
 } from "recharts";
 import { processData } from "../utils/dataProcessing";
 
-export default function ChartArea({ activeTab, setActiveTab, transactions }) {
+export default function ChartArea({
+  isDarkMode,
+  activeTab,
+  setActiveTab,
+  transactions,
+}) {
   const data = processData(transactions, activeTab);
-
-  const isDarkMode = document.documentElement.classList.contains("dark");
 
   return (
     <div className="bg-white rounded-lg shadow mb-8 dark:shadow-custom-dark dark:bg-darkbg">
@@ -40,7 +43,17 @@ export default function ChartArea({ activeTab, setActiveTab, transactions }) {
             <BarChart data={data}>
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip
+                cursor={{
+                  fill: isDarkMode ? "#3A3A3A" : "#EAEAEA", // 커서 강조 배경색
+                  opacity: 0.5,
+                }}
+                formatter={(value, name) => {
+                  const formattedValue = value.toLocaleString();
+                  const translatedName = name === "Income" ? "수입" : "지출";
+                  return [formattedValue, translatedName];
+                }}
+              />
               <Legend
                 formatter={(value) => {
                   if (value === "Income") return "수입";
@@ -48,10 +61,15 @@ export default function ChartArea({ activeTab, setActiveTab, transactions }) {
                   return value;
                 }}
               />
-              <Bar dataKey="Income" fill={isDarkMode ? "#E47373" : "#FFB5B5"} />
+              <Bar
+                dataKey="Income"
+                fill={isDarkMode ? "#E47373" : "#FFB5B5"}
+                activeFill={isDarkMode ? "#D35D5D" : "#FFA7A7"}
+              />
               <Bar
                 dataKey="Expense"
                 fill={isDarkMode ? "#1C7745" : "#B5E5CE"}
+                activeFill={isDarkMode ? "#165E35" : "#94D7B5"}
               />
             </BarChart>
           </ResponsiveContainer>
