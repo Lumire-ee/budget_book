@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { PlusCircle } from "lucide-react";
 import "./App.css";
 
@@ -52,9 +53,36 @@ function App() {
 
   const handleAddTransaction = (newTransaction) => {
     setTransactions((prevTransactions) => [
-      newTransaction,
+      { ...newTransaction, id: uuidv4() },
       ...prevTransactions,
     ]);
+  };
+
+  const handleDeleteTransaction = (id) => {
+    if (!window.confirm("삭제하시겠습니까?")) return;
+
+    console.log("삭제하려는 내역 ID:", id);
+    const updatedTransactions = transactions.filter(
+      (transaction) => transaction.id !== id
+    );
+    console.log("삭제 후 배열:", updatedTransactions);
+    setTransactions(updatedTransactions);
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(updatedTransactions)
+    );
+    setSelectedTransaction(null);
+  };
+
+  const handleUpdateTransaction = (updatedTransaction) => {
+    setTransactions((prev) =>
+      prev.map((transaction) =>
+        transaction.id === updatedTransaction.id
+          ? updatedTransaction
+          : transaction
+      )
+    );
+    setSelectedTransaction(null);
   };
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
@@ -69,6 +97,7 @@ function App() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           transactions={transactions}
+          setIsModalOpen={setIsModalOpen}
         />
         <TransactionsList
           transactions={transactions}
@@ -82,6 +111,8 @@ function App() {
         <TransactionDetailModal
           transaction={selectedTransaction}
           onClose={() => setSelectedTransaction(null)}
+          onDeleteTransaction={handleDeleteTransaction}
+          onUpdateTransaction={handleUpdateTransaction}
         />
       )}
       <button

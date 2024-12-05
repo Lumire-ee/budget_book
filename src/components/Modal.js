@@ -52,8 +52,17 @@ export default function Modal({ onAddTransaction, onClose }) {
     setTransactionType("income");
   };
 
+  const handleBackgroundClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center text-gray-500">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center text-gray-500"
+      onClick={handleBackgroundClick}
+    >
       <div className="bg-white rounded-lg p-6 shadow-lg w-96 dark:bg-[#212121]">
         <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-300">
           내역 추가
@@ -119,12 +128,6 @@ export default function Modal({ onAddTransaction, onClose }) {
         </div>
 
         <div className="mt-6 flex justify-end">
-          <button
-            className="px-4 py-2 mr-3 bg-[#424242] text-gray-300 rounded shadow dark:shadow-custom-dark hover:bg-[#555555] hover:text-white transition-all duration-200"
-            onClick={onClose}
-          >
-            취소
-          </button>
           <button
             className="px-4 py-2 bg-[#80CFA9] text-white rounded shadow dark:shadow-custom-dark hover:bg-[#66B292] transition-all duration-200"
             onClick={handleSubmit}
