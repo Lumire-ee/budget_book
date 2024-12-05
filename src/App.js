@@ -8,12 +8,14 @@ import ChartArea from "./components/ChartArea";
 import SummaryCards from "./components/SummaryCards";
 import TransactionsList from "./components/TransactionsList";
 import Modal from "./components/Modal";
+import TransactionDetailModal from "./components/TransactionDetailModal.js";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("월간");
   const [transactions, setTransactions] = useState([]);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   const LOCAL_STORAGE_KEY = "transactions";
 
@@ -57,14 +59,24 @@ function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white dark:bg-[#212121] text-gray-800 transition-colors duration-500">
         <SummaryCards income={income} expenses={expenses} balance={balance} />
         <ChartArea
+          isDarkMode={isDarkMode}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           transactions={transactions}
         />
-        <TransactionsList transactions={transactions} />
+        <TransactionsList
+          transactions={transactions}
+          setSelectedTransaction={setSelectedTransaction}
+        />
       </main>
       {isModalOpen && (
         <Modal onAddTransaction={handleAddTransaction} onClose={toggleModal} />
+      )}
+      {selectedTransaction && (
+        <TransactionDetailModal
+          transaction={selectedTransaction}
+          onClose={() => setSelectedTransaction(null)}
+        />
       )}
       <button
         className="fixed bottom-6 right-6 p-4 bg-[#E4B5FF] dark:bg-[#C792EA] rounded-full shadow-lg hover:bg-[#C792EA] dark:hover:bg-[#b06bd8] transition-colors"

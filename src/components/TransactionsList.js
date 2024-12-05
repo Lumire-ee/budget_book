@@ -1,6 +1,9 @@
 import { HandCoins, TrendingDown, ChevronRight } from "lucide-react";
 
-export default function TransactionsList({ transactions = [] }) {
+export default function TransactionsList({
+  transactions = [],
+  setSelectedTransaction,
+}) {
   return (
     <div className="bg-white rounded-lg shadow transactions dark:shadow-custom-dark dark:bg-darkbg ">
       <div className="px-6 py-4 border-b dark:border-gray-600">
@@ -17,6 +20,7 @@ export default function TransactionsList({ transactions = [] }) {
           <div
             key={transaction.id}
             className="px-6 py-4 border-b last:border-b-0 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-600"
+            onClick={() => setSelectedTransaction(transaction)}
           >
             <div className="flex items-center">
               <div className="mr-4">
