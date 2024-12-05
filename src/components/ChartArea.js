@@ -23,7 +23,7 @@ export default function ChartArea({
     <div className="bg-white rounded-lg shadow mb-8 dark:shadow-custom-dark dark:bg-darkbg">
       <div className="border-b dark:border-gray-600">
         <div className="flex p-4">
-          {["월간", "주간", "일간"].map((tab) => (
+          {["일간", "주간", "월간"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -41,9 +41,28 @@ export default function ChartArea({
       <div className="p-6 h-[300px] flex items-center justify-center text-gray-500">
         {data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data}>
+            <BarChart
+              data={data}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 10,
+                bottom: 10,
+              }}
+            >
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis
+                width={80}
+                tickFormatter={(value) => {
+                  if (value === 0) return "0";
+                  if (value >= 100000) return `${value / 10000}만원`;
+                  if (value >= 10000)
+                    return `${(value / 10000).toFixed(1)}만원`;
+                  return `${value / 1000}천원`;
+                }}
+                interval="preserveStartEnd"
+                tickCount={5}
+              />
               <Tooltip
                 cursor={{
                   fill: isDarkMode ? "#3A3A3A" : "#EAEAEA",
