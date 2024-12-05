@@ -36,12 +36,15 @@ export default function Modal({ onAddTransaction, onClose }) {
   };
 
   const handleSubmit = () => {
+    if (!formData.title || !formData.amount || !formData.category) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
     const amount =
       transactionType === "income"
         ? Math.abs(parseInt(formData.amount.replace(/,/g, ""), 10))
         : -Math.abs(parseInt(formData.amount.replace(/,/g, ""), 10));
-
-    console.log("transaction added!", { ...formData, amount });
 
     onAddTransaction({ ...formData, amount, type: transactionType });
     onClose();
