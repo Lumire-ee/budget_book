@@ -100,7 +100,7 @@ export default function ChartArea({
               className="mt-4 px-4 py-2 bg-primary text-white rounded"
               onClick={() => setIsModalOpen(true)}
             >
-              거래 추가하기
+              <p className="text-black dark:text-white">거래 추가하기</p>
             </button>
           </div>
         )}
