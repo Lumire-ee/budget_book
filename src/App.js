@@ -14,7 +14,7 @@ import TransactionDetailModal from "./components/TransactionDetailModal.js";
 function App() {
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("월간");
+  const [activeTab, setActiveTab] = useState("일간");
   const [transactions, setTransactions] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
