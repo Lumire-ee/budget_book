@@ -39,7 +39,9 @@ export default function SummaryCard({ income, expenses, balance }) {
           <div className="ml-4">
             <p className="text-sm text-gray-400">잔고</p>
             <p className="text-2xl font-semibold dark:text-gray-400">
-              ₩{Math.abs(balance).toLocaleString()}
+              {balance < 0
+                ? `-₩${Math.abs(balance).toLocaleString()}`
+                : `₩${balance.toLocaleString()}`}
             </p>
           </div>
         </div>
