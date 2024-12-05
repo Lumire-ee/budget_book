@@ -19,15 +19,21 @@ function App() {
 
   const LOCAL_STORAGE_KEY = "transactions";
 
-  useEffect(() => {
+  const loadTransactions = () => {
     const storedTransactions = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (storedTransactions) {
-      setTransactions(JSON.parse(storedTransactions));
-    }
+    return storedTransactions ? JSON.parse(storedTransactions) : [];
+  };
+
+  const saveTransactions = (transactions) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactions));
+  };
+
+  useEffect(() => {
+    setTransactions(loadTransactions);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(transactions));
+    saveTransactions(transactions);
   }, [transactions]);
 
   const calculaterSummary = () => {
