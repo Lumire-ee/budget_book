@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { HandCoins, TrendingDown } from "lucide-react";
 
 export default function Modal({ onAddTransaction, onClose }) {
-  const initailFormData = {
+  const initialFormData = {
     title: "",
     amount: "",
     category: "",
@@ -10,7 +10,7 @@ export default function Modal({ onAddTransaction, onClose }) {
   };
 
   const [transactionType, setTransactionType] = useState("income");
-  const [formData, setFormData] = useState({ initailFormData });
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +45,7 @@ export default function Modal({ onAddTransaction, onClose }) {
 
     onAddTransaction({ ...formData, amount, type: transactionType });
     onClose();
-    setFormData({ initailFormData });
+    setFormData(initialFormData);
     setTransactionType("income");
   };
 
