@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HandCoins, TrendingDown } from "lucide-react";
+import { handleInputChange } from "../utils/inputHandlers";
 
 export default function Modal({ onAddTransaction, onClose }) {
   const initialFormData = {
@@ -12,24 +13,7 @@ export default function Modal({ onAddTransaction, onClose }) {
   const [transactionType, setTransactionType] = useState("income");
   const [formData, setFormData] = useState(initialFormData);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "amount") {
-      const rawValue = value.replace(/,/g, "");
-      if (/^\d*$/.test(rawValue)) {
-        setFormData({
-          ...formData,
-          [name]: rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-        });
-      }
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
+  const onInputChange = (e) => handleInputChange(formData, setFormData, e);
 
   const handleTypeChange = (type) => {
     setTransactionType(type);
@@ -100,7 +84,7 @@ export default function Modal({ onAddTransaction, onClose }) {
             placeholder="내용"
             className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.title}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
           <input
             type="text"
@@ -108,7 +92,7 @@ export default function Modal({ onAddTransaction, onClose }) {
             placeholder="금액 (₩)"
             className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.amount}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
           <input
             type="text"
@@ -116,14 +100,14 @@ export default function Modal({ onAddTransaction, onClose }) {
             placeholder="분류"
             className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.category}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
           <input
             type="date"
             name="date"
             className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.date}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
         </div>
 

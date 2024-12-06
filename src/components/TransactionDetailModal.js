@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { handleInputChange } from "../utils/inputHandlers";
 
 function TransactionDetailModal({
   transaction,
@@ -7,20 +8,27 @@ function TransactionDetailModal({
   onUpdateTransaction,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ ...transaction });
+  const [formData, setFormData] = useState({
+    ...transaction,
+    amount: Math.abs(transaction.amount).toLocaleString(),
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const onInputChange = (e) => handleInputChange(formData, setFormData, e);
 
   const handleSave = () => {
-    onUpdateTransaction(formData);
+    const amount = parseInt(formData.amount.replace(/,/g, ""), 10) || 0;
+    const updatedData = {
+      ...formData,
+      amount: transaction.type === "income" ? amount : -amount,
+    };
+
+    onUpdateTransaction(updatedData);
     setIsEditing(false);
   };
 
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
+      e.stopPropagation();
       onClose();
     }
   };
@@ -43,28 +51,28 @@ function TransactionDetailModal({
               type="text"
               name="title"
               value={formData.title}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm"
             />
             <input
               type="text"
               name="amount"
               value={formData.amount}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm"
             />
             <input
               type="text"
               name="category"
               value={formData.category}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm"
             />
             <input
               type="date"
               name="date"
               value={formData.date}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm"
             />
           </div>
