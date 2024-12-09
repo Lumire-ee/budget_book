@@ -2,6 +2,17 @@ import React, { useState } from "react";
 import { HandCoins, TrendingDown } from "lucide-react";
 import { handleInputChange } from "../utils/inputHandlers";
 
+const INCOME_CATEGORIES = ["급여", "투자", "연금", "기타"];
+const EXPENSE_CATEGORIES = [
+  "음식",
+  "교통",
+  "공과금",
+  "쇼핑",
+  "병원",
+  "기부",
+  "기타",
+];
+
 export default function Modal({ onAddTransaction, onClose }) {
   const initialFormData = {
     title: "",
@@ -41,6 +52,9 @@ export default function Modal({ onAddTransaction, onClose }) {
       onClose();
     }
   };
+
+  const categories =
+    transactionType === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
   return (
     <div
@@ -94,14 +108,21 @@ export default function Modal({ onAddTransaction, onClose }) {
             value={formData.amount}
             onChange={onInputChange}
           />
-          <input
-            type="text"
+          <select
             name="category"
-            placeholder="분류"
-            className="w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
             value={formData.category}
             onChange={onInputChange}
-          />
+            className="appearance-none w-full p-2 rounded bg-[#F0F0F0] dark:bg-[#2E2E2E] text-gray-800 dark:text-gray-300 outline-none shadow-sm dark:shadow-[0_4px_6px_rgba(0,0,0,0.6)]"
+          >
+            <option value="" disabled>
+              카테고리 선택
+            </option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
           <input
             type="date"
             name="date"
