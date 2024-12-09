@@ -17,6 +17,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("일간");
   const [transactions, setTransactions] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [sortOption, setSortOption] = useState("date");
 
   const LOCAL_STORAGE_KEY = "transactions";
 
@@ -49,6 +50,17 @@ function App() {
     return { income, expenses, balance };
   };
 
+  const sortedTransactions = [...transactions].sort((a, b) => {
+    if (sortOption === "date") {
+      return new Date(b.date) - new Date(a.date);
+    } else if (sortOption === "income") {
+      return b.amount - a.amount;
+    } else if (sortOption === "expenses") {
+      return a.amount - b.amount;
+    }
+    return 0;
+  });
+
   const { income, expenses, balance } = calculaterSummary();
 
   const handleAddTransaction = (newTransaction) => {
@@ -60,12 +72,9 @@ function App() {
 
   const handleDeleteTransaction = (id) => {
     if (!window.confirm("삭제하시겠습니까?")) return;
-
-    console.log("삭제하려는 내역 ID:", id);
     const updatedTransactions = transactions.filter(
       (transaction) => transaction.id !== id
     );
-    console.log("삭제 후 배열:", updatedTransactions);
     setTransactions(updatedTransactions);
     localStorage.setItem(
       LOCAL_STORAGE_KEY,
@@ -100,7 +109,9 @@ function App() {
           setIsModalOpen={setIsModalOpen}
         />
         <TransactionsList
-          transactions={transactions}
+          transactions={sortedTransactions}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
           setSelectedTransaction={setSelectedTransaction}
         />
       </main>

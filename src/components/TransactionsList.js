@@ -3,13 +3,24 @@ import { HandCoins, TrendingDown, ChevronRight } from "lucide-react";
 export default function TransactionsList({
   transactions = [],
   setSelectedTransaction,
+  sortOption,
+  setSortOption,
 }) {
   return (
     <div className="bg-white rounded-lg shadow transactions dark:shadow-custom-dark dark:bg-darkbg ">
-      <div className="px-6 py-4 border-b dark:border-gray-600">
+      <div className="flex justify-between px-6 py-4 border-b dark:border-gray-600">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-400">
           거래 내역
         </h2>
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="p-2 rounded bg-white text-gray-800 dark:bg-darkbg dark:text-[#99A1AD] dark:border-gray-600 transition-colors focus:outline-none"
+        >
+          <option value="date">날짜</option>
+          <option value="income">수입</option>
+          <option value="expenses">지출</option>
+        </select>
       </div>
       {transactions.length === 0 ? (
         <div className="py-16 text-center text-gray-500">
